@@ -1,0 +1,43 @@
+image_pos = PVector(600, 300)
+text_size = 32
+# import PImage 
+
+def setup():
+    size(1200, 700)
+
+def draw():
+    # global photo
+    photo = loadImage("game.jpg")
+    global image_pos
+    global text_size
+
+    image(photo, 0, 0)
+    
+    #text
+    
+    textSize(text_size)
+    fill(0,0,0)
+    textAlign(CENTER, CENTER)
+    text(' "Press Enter to Start Your Adventure" ' ,image_pos.x, image_pos.y)
+    
+    textSize(text_size)
+    fill(0, 0, 0)
+    textAlign(CENTER, CENTER)
+    text(' "Press Enter to Start Your Adventure" ' ,image_pos.x, image_pos.y)
+    
+    if keyPressed:
+        if key == ENTER:
+            image_pos.mult(1000)
+        
+                
+
+            
+            
+    
+    
+
+        # textSize(32)
+        # fill(0,0,0)
+        # text(' "Press Enter to Start Your Adventure" ' ,6000,300)
+        # textSize(32)
+        # fill(0, 0, 0)
