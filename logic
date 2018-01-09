@@ -1,7 +1,8 @@
 jump_height = 15
 gravity = 2.5
+velocity = 0
 
-speed = 5
+speed = 20
 key_state = []
 for _ in range(233):
     key_state.append(False)
@@ -10,25 +11,45 @@ for _ in range(233):
 player_pos = PVector(300, 300)
 p_size = 40
 
+#background
+image_pos = PVector(600, 300)
+text_size = 32
 def setup():
-    size(1200, 700)
+    size(1279, 720)
+    #Background
+    photo = loadImage("game.jpg")
+    global image_pos
+    global text_size
+    image(photo, 0, 0)
 
 def draw():
     global player_pos
     global key_state
     global gravity
-    background(255)
-    
+    global velocity
+
+    photo = loadImage("game.jpg")
+    global image_pos
+    global text_size
+    image(photo, 0, 0)
+    background(photo)
+   
     #Player
     fill(0, 0, 255)
-    ellipse(player_pos.x, player_pos.y, p_size, p_size)
+    rect(player_pos.x, player_pos.y, p_size, p_size)
     
     #Ground
     fill(0, 255, 0)
     line(0, 600, 1200, 600)
 
+    #Gravity
+    velocity += gravity
+    player_pos.y += velocity
+    
     #Movement
     if keyPressed:
+
+        
         if key_state[37]:
             player_pos.x -= speed
         elif key_state[39]:
@@ -36,9 +57,11 @@ def draw():
             
         if key_state[38]:
             player_pos.y = player_pos.y - jump_height
-       
-
-            
+    
+    if player_pos.y > 600:
+        player_pos.y = 560
+        
+    
 def keyPressed():
     global key_state 
     key_state[keyCode] = True
