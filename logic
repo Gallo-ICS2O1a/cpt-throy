@@ -60,9 +60,10 @@ def draw():
         if key_state[38] or key_state[87]:
             player_pos.y -= jump_height
             
+            
     
     #ground
-    if player_pos.y > 600:
+    if player_pos.y + 40 > 600:
         player_pos.y = 560
         
     
