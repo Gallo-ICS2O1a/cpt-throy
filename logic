@@ -34,7 +34,7 @@ def draw():
     
     #Ground
     fill(0, 255, 0)
-    line(0, 600, 1200, 600)
+    line(0, 600, width, 600)
     
     #Gravity
     velocity += gravity
