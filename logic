@@ -1,24 +1,126 @@
+jump_height = 25
 gravity = .5
+velocity = 0
+accelerate = .25
+walking_speed = 0
+comp_speed = 0
+comp_accelerate = .0025
+
+key_state = []
+for _ in range(233):
+    key_state.append(False)
+
+#Player
+player_pos = PVector(300, 300)
+p_size = 40
+
+#Ball
+comp_pos = PVector(0, 300)
+comp_size = 300 
+
+
 
 def setup():
-    size(1200, 700)
-    
+    size(1279, 720)
+
 def draw():
-    background(255)
+    global player_pos
+    global key_state
+    global gravity
+    global velocity
+    global walking_speed
+    global acceleration
+    global comp_pos
+    global comp_size
+    global comp_speed
+    global comp_accelerate
     
-    player = Player(300, 300)
+    background(255)
+
+   #Player
+    fill(0, 0, 255)
+    rect(player_pos.x, player_pos.y, p_size, p_size)
+    
+    #Ground
+    fill(0, 255, 0)
+    line(0, 600, width, 600)
+    
+    #Gravity
+    velocity += gravity
+    player_pos.y += velocity
+    if velocity >= 10:
+        velocity = 10
+
+   
+    #Movement
+    if keyPressed:
+    
+        if key_state[37] or key_state[65]:
+            walking_speed += accelerate
+            player_pos.x -= walking_speed
+            
+       
+        elif key_state[39] or key_state[68]:
+            walking_speed += accelerate
+            player_pos.x += walking_speed
+          
+        elif walking_speed >= 10:
+                walking_speed = 10 
+        
+        if key_state[38] or key_state[87]:
+            player_pos.y -= jump_height
+            
+            
+    
+    #ground
+    if player_pos.y + 40 > 600:
+        player_pos.y = 560
+        
+    platform1 = Platform()
+    platform1.x = 600 
+    platform1.y = 550
+    
+    platform2 = Platform()
+    platform2.x = 800
+    platform2.y = 550
+
+    fill(255, 0, 0)
+    platform1.display()
+    platform2.display()
+     
+    
+class Platform:
+    def __init__(self):
+        x = 0
+        y = 0
+        C = color(255, 0, 0)
+    
+    def display(self):
+        global C
+        rect(self.x, self.y, 40, 40)
     
 
-class Player:
     
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.big = 40
-        self.velocity = 0
+    #Computer
+    # rect(comp_pos.x, comp_pos.y, comp_size, comp_size)
+    # comp_speed += comp_accelerate
+    # comp_pos.x += comp_speed
+    
+    #Collision Detection
+    
+    
+    
         
-    def Update(self, gravity):
-        self.velocity += gravity
-        self.y += velocity 
+    
+def keyPressed():
+    global key_state 
+    key_state[keyCode] = True
+    
+def keyReleased():
+    global space
+    global key_state
+    global walking_speed
+    key_state[keyCode] = False
+    walking_speed = 0
 
 
