@@ -1,79 +1,24 @@
-jump_height = 25
 gravity = .5
-velocity = 0
-accelerate = .25
-walking_speed = 0
-key_state = []
 
-for _ in range(233):
-    key_state.append(False)
-
-#Player
-player_pos = PVector(300, 300)
-p_size = 40
-
-#background
-image_pos = PVector(600, 300)
-text_size = 32
 def setup():
-    size(1279, 720)
-
+    size(1200, 700)
+    
 def draw():
-    global player_pos
-    global key_state
-    global gravity
-    global velocity
-    global walking_speed
-    global acceleration
-    
     background(255)
+    
+    player = Player(300, 300)
+    
 
-   #Player
-    fill(0, 0, 255)
-    rect(player_pos.x, player_pos.y, p_size, p_size)
+class Player:
     
-    #Ground
-    fill(0, 255, 0)
-    line(0, 600, width, 600)
-    
-    #Gravity
-    velocity += gravity
-    player_pos.y += velocity
-    if velocity >= 10:
-        velocity = 10
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.big = 40
+        self.velocity = 0
+        
+    def Update(self, gravity):
+        self.velocity += gravity
+        self.y += velocity 
 
-   
-    #Movement
-    if keyPressed:
-    
-        if key_state[37] or key_state[65]:
-            walking_speed += accelerate
-            player_pos.x -= walking_speed
-       
-        elif key_state[39] or key_state[68]:
-            walking_speed += accelerate
-            player_pos.x += walking_speed
-          
-        elif walking_speed >= 10:
-                walking_speed = 10 
-        
-        if key_state[38] or key_state[87]:
-            player_pos.y -= jump_height
-            
-            
-    
-    #ground
-    if player_pos.y + 40 > 600:
-        player_pos.y = 560
-        
-    
-def keyPressed():
-    global key_state 
-    key_state[keyCode] = True
-    
-def keyReleased():
-    global space
-    global key_state
-    global walking_speed
-    key_state[keyCode] = False
-    walking_speed = 0
+
