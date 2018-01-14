@@ -1,126 +1,95 @@
-jump_height = 25
-gravity = .5
-velocity = 0
+walk_speed = 0
 accelerate = .25
-walking_speed = 0
-comp_speed = 0
-comp_accelerate = .0025
+gravity = 0.5
+
+moveX = 0
+moveY = 0
 
 key_state = []
 for _ in range(233):
     key_state.append(False)
 
-#Player
-player_pos = PVector(300, 300)
-p_size = 40
-
-#Ball
-comp_pos = PVector(0, 300)
-comp_size = 300 
-
-
-
 def setup():
-    size(1279, 720)
-
+    size(1200, 700)
+    
 def draw():
-    global player_pos
-    global key_state
-    global gravity
-    global velocity
-    global walking_speed
-    global acceleration
-    global comp_pos
-    global comp_size
-    global comp_speed
-    global comp_accelerate
-    
     background(255)
+    global speed 
+    global walk_speed
+    global accelerate
+    global moveX
+    global moveY
+    global gravity
 
-   #Player
-    fill(0, 0, 255)
-    rect(player_pos.x, player_pos.y, p_size, p_size)
+    player = Player(300, 300)
+    player.x += moveX
+    player.y += moveY
+    player.display()
     
-    #Ground
-    fill(0, 255, 0)
-    line(0, 600, width, 600)
+    platform1 = Platform(0, 640)
     
-    #Gravity
-    velocity += gravity
-    player_pos.y += velocity
-    if velocity >= 10:
-        velocity = 10
-
+    platform1.display_p()
+    
+    
+    
+    
+    if key_state[37] or key_state[65]:
+        walk_speed += accelerate
+        moveX -= walk_speed             
+    
+    elif key_state[39] or key_state[68]:
+        walk_speed += accelerate
+        moveX += walk_speed
+    
+    if walk_speed >=10:
+        walk_speed = 10
    
-    #Movement
-    if keyPressed:
-    
-        if key_state[37] or key_state[65]:
-            walking_speed += accelerate
-            player_pos.x -= walking_speed
-            
-       
-        elif key_state[39] or key_state[68]:
-            walking_speed += accelerate
-            player_pos.x += walking_speed
-          
-        elif walking_speed >= 10:
-                walking_speed = 10 
+    if key_state[38] or key_state[87]:
+        walk_speed += accelerate
+        moveY -= walk_speed
         
-        if key_state[38] or key_state[87]:
-            player_pos.y -= jump_height
-            
-            
-    
-    #ground
-    if player_pos.y + 40 > 600:
-        player_pos.y = 560
+    if key_state[40] or key_state[83]:
+        walk_speed += accelerate
+        moveY += walk_speed
         
-    platform1 = Platform()
-    platform1.x = 600 
-    platform1.y = 550
-    
-    platform2 = Platform()
-    platform2.x = 800
-    platform2.y = 550
-
-    fill(255, 0, 0)
-    platform1.display()
-    platform2.display()
-     
-    
-class Platform:
-    def __init__(self):
-        x = 0
-        y = 0
-        C = color(255, 0, 0)
-    
-    def display(self):
-        global C
-        rect(self.x, self.y, 40, 40)
-    
-
-    
-    #Computer
-    # rect(comp_pos.x, comp_pos.y, comp_size, comp_size)
-    # comp_speed += comp_accelerate
-    # comp_pos.x += comp_speed
-    
-    #Collision Detection
-    
-    
-    
+    if walk_speed >=10:
+        walk_speed = 10
         
-    
 def keyPressed():
     global key_state 
+    global accelerate
     key_state[keyCode] = True
     
 def keyReleased():
-    global space
     global key_state
-    global walking_speed
+    global walk_speed
     key_state[keyCode] = False
-    walking_speed = 0
+    walk_speed = 0
+    
+class Player():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.h = 40
+        self.velocity = 0
+        self.gravity = .5
+        
+    
+    def display(self):
+        fill(0, 255, 0)
+        rect(self.x, self.y, self.h, self.h)
 
+class Platform():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.h = 60
+    
+    def display_p(self):
+        fill(255, 0, 0)
+        rect(self.x, self.y, self.h, self.h)
+        
 
+        
+        
+        
