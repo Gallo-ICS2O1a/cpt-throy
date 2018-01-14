@@ -1,6 +1,8 @@
 walk_speed = 0
 accelerate = .25
-gravity = 0.5
+gravity = .5
+velocity = 0
+jump_height = 25
 
 moveX = 0
 moveY = 0
@@ -17,21 +19,25 @@ def draw():
     global speed 
     global walk_speed
     global accelerate
+    global gravity
+    global velocity
     global moveX
     global moveY
-    global gravity
+
 
     player = Player(300, 300)
     player.x += moveX
     player.y += moveY
     player.display()
     
-    platform1 = Platform(0, 640)
-    
+    platform1 = Platform(300, 600)
     platform1.display_p()
     
+
+    print("1", platform1.x)
     
-    
+    player.collisionDetection(player.x, player.y, player.w, player.h, platform1.x, platform1.y, platform1.w, platform1.h)
+    print("2", player.x + player.w)
     
     if key_state[37] or key_state[65]:
         walk_speed += accelerate
@@ -41,20 +47,18 @@ def draw():
         walk_speed += accelerate
         moveX += walk_speed
     
-    if walk_speed >=10:
-        walk_speed = 10
-   
     if key_state[38] or key_state[87]:
-        walk_speed += accelerate
-        moveY -= walk_speed
-        
+        moveY -= jump_height
+    
     if key_state[40] or key_state[83]:
-        walk_speed += accelerate
-        moveY += walk_speed
+        moveY += jump_height
         
     if walk_speed >=10:
         walk_speed = 10
         
+    # velocity += gravity
+    # moveY += velocity
+
 def keyPressed():
     global key_state 
     global accelerate
@@ -65,26 +69,40 @@ def keyReleased():
     global walk_speed
     key_state[keyCode] = False
     walk_speed = 0
-    
+
 class Player():
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.w = 40
         self.h = 40
-        self.velocity = 0
-        self.gravity = .5
+        self.c = color(0, 255, 0)
+        self.velocity = 0    
+    
+
+    def collisionDetection(self, x1, y1, w1, h1, x2, y2, w2, h2):
+    
+        if x1 + w1 >= y2 or x1 + w1 >= y2+ w2:
+            self.c = color(255, 0, 0)
+            
         
     
     def display(self):
-        fill(0, 255, 0)
-        rect(self.x, self.y, self.h, self.h)
+        fill(self.c)
+        rect(self.x, self.y, self.w, self.h)
 
 class Platform():
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.h = width
+        self.w= 60
+        self.h = 60
     
     def display_p(self):
         fill(255, 0, 0)
-        rect(self.x, self.y, self.h, self.h)
+        rect(self.x, self.y, self.w, self.h)
+        
+
+        
+        
+        
