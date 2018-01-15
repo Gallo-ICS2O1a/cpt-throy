@@ -6,6 +6,7 @@ jump_height = 25
 
 moveX = 0
 moveY = 0
+gravY = 0
 
 key_state = []
 for _ in range(233):
@@ -23,21 +24,24 @@ def draw():
     global velocity
     global moveX
     global moveY
-
+    global gravY
 
     player = Player(300, 300)
     player.x += moveX
     player.y += moveY
+    player.y += gravY
+    player.update()
     player.display()
+    print(player.velocity)
     
     platform1 = Platform(300, 600)
     platform1.display_p()
     
 
-    print("1", platform1.x)
+
     
     player.collisionDetection(player.x, player.y, player.w, player.h, platform1.x, platform1.y, platform1.w, platform1.h)
-    print("2", player.x + player.w)
+
     
     if key_state[37] or key_state[65]:
         walk_speed += accelerate
@@ -55,9 +59,7 @@ def draw():
         
     if walk_speed >=10:
         walk_speed = 10
-        
-    # velocity += gravity
-    # moveY += velocity
+
 
 def keyPressed():
     global key_state 
@@ -78,13 +80,18 @@ class Player():
         self.h = 40
         self.c = color(0, 255, 0)
         self.velocity = 0    
-    
+        self.gravity = .5
 
     def collisionDetection(self, x1, y1, w1, h1, x2, y2, w2, h2):
     
         if x1 + w1 >= y2 or x1 + w1 >= y2+ w2:
             self.c = color(255, 0, 0)
-            
+    
+    def update(self):
+        global gravY
+        self.velocity += self.gravity
+        gravY += self.velocity
+                
         
     
     def display(self):
@@ -101,6 +108,11 @@ class Platform():
     def display_p(self):
         fill(255, 0, 0)
         rect(self.x, self.y, self.w, self.h)
+        
+
+        
+        
+        
         
 
         
