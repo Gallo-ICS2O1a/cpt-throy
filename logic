@@ -1,3 +1,66 @@
+class Platform():
+    def __init__(self, x, y):
+        self.pos = PVector(x, y)
+        self.w= 40
+        self.h = 40
+        self.colour = color(255, 0, 0)
+    
+    def display_p(self):
+        fill(self.colour)
+        ellipse(self.pos.x, self.pos.y, self.w, self.h)
+
+class Player():
+    def __init__(self, x, y):
+        
+        self.pos = PVector(x, y)
+        self.w = 40
+        self.h = 40
+        self.colour = color(0, 255, 0)
+        self.velocity = 0    
+        self.gravity = .5
+    
+    def collisionDetect(self, x1, y1, w1 , x2, y2, w2):
+   
+        self.r = w1/2
+        self.a = x1 - x2
+        self.b = y1 - y2
+        self.c = sqrt(self.a**2 + self.b**2)
+        
+        if self.c <= self.r*2:
+            print("true")
+            
+            
+        else:
+            print("false")
+        
+        
+        
+        
+    def update(self):
+        global gravY
+        self.velocity += self.gravity
+        gravY += self.velocity
+        
+
+            
+    def display(self):
+        fill(self.colour)
+        ellipse(self.pos.x, self.pos.y, self.w, self.h)
+
+
+def keyPressed():
+    global key_state 
+    global accelerate
+    key_state[keyCode] = True
+    
+
+def keyReleased():
+    global key_state
+    global walk_speed
+    key_state[keyCode] = False
+    walk_speed = 0
+
+
 walk_speed = 0
 accelerate = .25
 gravity = .5
@@ -12,8 +75,9 @@ key_state = []
 for _ in range(233):
     key_state.append(False)
 
+
 def setup():
-    size(1200, 700)
+    size(600, 700)
     
 def draw():
     background(255)
@@ -27,20 +91,21 @@ def draw():
     global gravY
 
     player = Player(300, 300)
-    player.x += moveX
-    player.y += moveY
-    player.y += gravY
+    player.pos.x += moveX
+    player.pos.y += moveY
+    player.pos.y += gravY
     player.update()
     player.display()
-    print(player.velocity)
-    
-    platform1 = Platform(300, 600)
+    platform1 = Platform(400, 600)
+    platform2 = Platform(300, 500)
+    platform3 = Platform(200, 400)
     platform1.display_p()
-    
+    platform2.display_p()
+    platform3.display_p()
+    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform1.pos.x, platform1.pos.y, platform1.w)
+    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform2.pos.x, platform2.pos.y, platform2.w)
+    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform3.pos.x, platform3.pos.y, platform3.w)
 
-
-    
-    player.collisionDetection(player.x, player.y, player.w, player.h, platform1.x, platform1.y, platform1.w, platform1.h)
 
     
     if key_state[37] or key_state[65]:
@@ -58,63 +123,11 @@ def draw():
         moveY += jump_height
         
     if walk_speed >=10:
-        walk_speed = 10
-
-
-def keyPressed():
-    global key_state 
-    global accelerate
-    key_state[keyCode] = True
-    
-def keyReleased():
-    global key_state
-    global walk_speed
-    key_state[keyCode] = False
-    walk_speed = 0
-
-class Player():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.w = 40
-        self.h = 40
-        self.c = color(0, 255, 0)
-        self.velocity = 0    
-        self.gravity = .5
-
-    def collisionDetection(self, x1, y1, w1, h1, x2, y2, w2, h2):
-    
-        if x1 + w1 >= y2 or x1 + w1 >= y2+ w2:
-            self.c = color(255, 0, 0)
-    
-    def update(self):
-        global gravY
-        self.velocity += self.gravity
-        gravY += self.velocity
-                
+        walk_speed = 10       
+        
         
     
-    def display(self):
-        fill(self.c)
-        rect(self.x, self.y, self.w, self.h)
-
-class Platform():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.w= 60
-        self.h = 60
+        
     
-    def display_p(self):
-        fill(255, 0, 0)
-        rect(self.x, self.y, self.w, self.h)
-        
-
-        
-        
-        
-        
-
-        
         
         
