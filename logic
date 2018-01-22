@@ -54,37 +54,70 @@ def draw():
     
     if screen == 0:
         background(255)
+        fill(255)
         rect(75, 100, 150, 100)
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
+        textSize(32)
+        fill(0)
+        text("PLAY", 115, 160)
+        
+    if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
             if mousePressed == True:
                 screen = 1
     
     
     if screen == 1:
+        
         ball1 = Ball(0, 0)
+        ball2 = Ball(300, -200)
         velocity += gravity
+        
         ball1.pos.y += velocity
         
         if ball1.pos.y - 40 >= height:
             velocity = 0
-            ball1.pos.y = 0
+            ball1.pos.y = random(-100, 0)
             gravity += velocity
             ball1.pos.y += velocity
             ball1.pos.x = random(0, width)
             score += 1
         
+
+        ball2.pos.y += velocity
+        
+        if ball2.pos.y - 40 >= height:
+            velocity = 0
+            ball2.pos.y = random(-100, 0)
+            gravity += velocity
+            ball2.pos.y += velocity
+            ball2.pos.x = random(0, width)
+            score += 1
+        
+        print(velocity)
+        
         ball1.display()
+        ball2.display()
+        
         player = Player()
         player.display()
         player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize)
+        player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball2.pos.x, ball2.pos.y, ball2.bsize)
         
         if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize) == True:
             score = 0
             velocity = 0
-            ball1.pos.y = 0
+            ball1.pos.y = random(-100, 0)
             gravity += velocity
             ball1.pos.y += velocity
             ball1.pos.x = random(0, width)
+      
+        if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball2.pos.x, ball2.pos.y, ball2.bsize) == True:
+            score = 0
+            velocity = 0
+            ball2.pos.y = random(-100, 0)
+            gravity += velocity
+            ball2.pos.y += velocity
+            ball2.pos.x = random(0, width)
+        
             
         #Scoreboard
         fill(0, 255, 0)
