@@ -40,9 +40,12 @@ class Player():
 score = 0
 velocity = 0
 velocity2 = 0
-gravity = 10
+gravity = .5
 screen = 0
 lives = 3
+
+ball1 = Ball(0, 0)
+ball2 = Ball(300, -200)
 
 def setup():
     size(300, 600)
@@ -57,6 +60,7 @@ def draw():
     background(0)
     
     if screen == 0:
+        cursor()
         background(255)
         
         
@@ -103,9 +107,10 @@ can escape.""", 0, 100)
     
 
     elif screen == 1:
-        
-        ball1 = Ball(0, 0)
-        ball2 = Ball(300, -200)
+        noCursor()
+        global ball1
+        global ball2
+
         velocity += gravity
         velocity2 += gravity
         
@@ -175,6 +180,7 @@ can escape.""", 0, 100)
             screen = 3
     
     elif screen == 3:
+        cursor()
         background(255)
         fill(255)
         rect(75, 300, 150, 100)
@@ -196,8 +202,3 @@ can escape.""", 0, 100)
             if mousePressed == True:
                 lives = 3
                 screen = 0
-                
-
-                
-        
-        
