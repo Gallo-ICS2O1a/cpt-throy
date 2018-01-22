@@ -39,6 +39,7 @@ class Player():
     
 score = 0
 velocity = 0
+velocity2 = 0
 gravity = 10
 screen = 0
 
@@ -49,6 +50,7 @@ def draw():
     global score
     global gravity
     global velocity
+    global velocity2
     global screen
     background(0)
     
@@ -70,6 +72,7 @@ def draw():
         ball1 = Ball(0, 0)
         ball2 = Ball(300, -200)
         velocity += gravity
+        velocity2 += gravity
         
         ball1.pos.y += velocity
         
@@ -82,17 +85,17 @@ def draw():
             score += 1
         
 
-        ball2.pos.y += velocity
+        ball2.pos.y += velocity2
         
         if ball2.pos.y - 40 >= height:
-            velocity = 0
+            velocity2 = 0
             ball2.pos.y = random(-100, 0)
-            gravity += velocity
-            ball2.pos.y += velocity
+            gravity += velocity2
+            ball2.pos.y += velocity2
             ball2.pos.x = random(0, width)
             score += 1
         
-        print(velocity)
+   
         
         ball1.display()
         ball2.display()
@@ -112,10 +115,10 @@ def draw():
       
         if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball2.pos.x, ball2.pos.y, ball2.bsize) == True:
             score = 0
-            velocity = 0
+            velocity2 = 0
             ball2.pos.y = random(-100, 0)
-            gravity += velocity
-            ball2.pos.y += velocity
+            gravity += velocity2
+            ball2.pos.y += velocity2
             ball2.pos.x = random(0, width)
         
             
