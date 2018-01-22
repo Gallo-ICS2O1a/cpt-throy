@@ -4,11 +4,11 @@ class Ball():
         global gravity
         self.pos = PVector(x, y)
         self.bsize = 40
-        self.c = color(255, 0, 0)
-   
+        self.c = color(255, 0, 0)   
+    
     def display(self):
         fill(self.c)
-        ellipse(self.pos.x, self.pos.y, self.bsize, self.bsize )
+        ellipse(self.pos.x, self.pos.y, self.bsize, self.bsize)
         
 
 class Player():
@@ -27,11 +27,9 @@ class Player():
         if self.c <= self.r*2:
             return(True)
             
-            
         else:
             return(False)
 
-    
     def display(self):
         fill(self.c)
         ellipse(self.pos.x, self.pos.y, 40, 40)
@@ -47,9 +45,11 @@ lives = 3
 ball1 = Ball(0, 0)
 ball2 = Ball(300, -200)
 
+
 def setup():
     size(300, 600)
     
+
 def draw():
     global score
     global gravity
@@ -63,15 +63,14 @@ def draw():
         cursor()
         background(255)
         
-        
         fill(255)
         rect(75, 100, 150, 100)
         textSize(32)
         fill(0)
         text("PLAY", 115, 160)
         
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
                 screen = 1
     
         fill(255)
@@ -165,6 +164,7 @@ can escape.""", 0, 100)
         
         if score == 100:
             screen = 3
+            score = 0
         
         #Scoreboard
         fill(0, 255, 0)
