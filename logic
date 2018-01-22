@@ -18,19 +18,19 @@ class Player():
         self.c = color(0, 255, 0)
         
     def collisionDetect(self, x1, y1, w1 , x2, y2, w2):
-   
+    
         self.r = w1/2
         self.a = x1 - x2
         self.b = y1 - y2
         self.c = sqrt(self.a**2 + self.b**2)
         
         if self.c <= self.r*2:
-            print("true")
+            return(True)
             
             
         else:
-            print("false")
-    
+            return(False)
+
     
     def display(self):
         fill(self.c)
@@ -40,6 +40,8 @@ class Player():
 score = 0
 velocity = 0
 gravity = 10
+screen = 0
+
 def setup():
     size(300, 600)
     
@@ -47,45 +49,45 @@ def draw():
     global score
     global gravity
     global velocity
+    global screen
     background(0)
     
-    ball1 = Ball(0, 0)
-    velocity += gravity
-    ball1.pos.y += velocity
+    if screen == 0:
+        background(255)
+        rect(25, 300, 150, 100)
+        if mouseX >= 0 and mouseX <= 600 and mouseY >= 0 and mouseY <= 700:
+            if mousePressed == True:
+                screen = 1
     
-    if ball1.pos.y - 40 >= height:
-        velocity = 0
-        ball1.pos.y = 0
-        gravity += velocity
+    
+    if screen == 1:
+        ball1 = Ball(0, 0)
+        velocity += gravity
         ball1.pos.y += velocity
-        ball1.pos.x = random(0, width)
-        score += 1
-    
-    
-    print(ball1.pos.y)
-    ball1.display()
-    player = Player()
-    player.display()
-    player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize)
         
-    #Scoreboard
-    fill(0, 255, 0)
-    textSize(30)
-    text(score, 50, 50)
+        if ball1.pos.y - 40 >= height:
+            velocity = 0
+            ball1.pos.y = 0
+            gravity += velocity
+            ball1.pos.y += velocity
+            ball1.pos.x = random(0, width)
+            score += 1
+        
+        ball1.display()
+        player = Player()
+        player.display()
+        player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize)
+        
+        if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize) == True:
+            score = 0
+            velocity = 0
+            ball1.pos.y = 0
+            gravity += velocity
+            ball1.pos.y += velocity
+            ball1.pos.x = random(0, width)
+            
+        #Scoreboard
+        fill(0, 255, 0)
+        textSize(30)
+        text(score, 50, 50)
     
-    # #updating pos of falling ball
-    # if falling_ball_pos.y >= height:
-    #     falling_ball_pos.y = 0
-    #     falling_ball_pos.x = random(0, 300)
-    #     gravity += acceleration
-    #     score += 1
-    
-    # r = 40/2
-    # a = falling_ball_pos.x - mouseX
-    # b = falling_ball_pos.y - 580
-    # c = sqrt(a**2 + b**2)
-    
-    # if c <= r*2:
-    #     score = 0
-    #     falling_ball_pos.y = 0
-    #     gravity = 10
