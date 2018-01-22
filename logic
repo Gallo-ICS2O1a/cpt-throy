@@ -1,24 +1,22 @@
-class Platform():
+class Ball():
     def __init__(self, x, y):
+        global velocity
+        global gravity
         self.pos = PVector(x, y)
-        self.w= 40
-        self.h = 40
-        self.colour = color(255, 0, 0)
-    
-    def display_p(self):
-        fill(self.colour)
-        ellipse(self.pos.x, self.pos.y, self.w, self.h)
+        self.bsize = 40
+        self.c = color(255, 0, 0)
+   
+    def display(self):
+        fill(self.c)
+        ellipse(self.pos.x, self.pos.y, self.bsize, self.bsize )
+        
 
 class Player():
-    def __init__(self, x, y):
+    def __init__(self):
+        self.pos = PVector(mouseX, 580)
+        self.bsize = 40
+        self.c = color(0, 255, 0)
         
-        self.pos = PVector(x, y)
-        self.w = 40
-        self.h = 40
-        self.colour = color(0, 255, 0)
-        self.velocity = 0    
-        self.gravity = .5
-    
     def collisionDetect(self, x1, y1, w1 , x2, y2, w2):
    
         self.r = w1/2
@@ -32,102 +30,62 @@ class Player():
             
         else:
             print("false")
-        
-        
-        
-        
-    def update(self):
-        global gravY
-        self.velocity += self.gravity
-        gravY += self.velocity
-        
-
-            
-    def display(self):
-        fill(self.colour)
-        ellipse(self.pos.x, self.pos.y, self.w, self.h)
-
-
-def keyPressed():
-    global key_state 
-    global accelerate
-    key_state[keyCode] = True
     
-
-def keyReleased():
-    global key_state
-    global walk_speed
-    key_state[keyCode] = False
-    walk_speed = 0
-
-
-walk_speed = 0
-accelerate = .25
-gravity = .5
+    
+    def display(self):
+        fill(self.c)
+        ellipse(self.pos.x, self.pos.y, 40, 40)
+              
+    
+score = 0
 velocity = 0
-jump_height = 25
-
-moveX = 0
-moveY = 0
-gravY = 0
-
-key_state = []
-for _ in range(233):
-    key_state.append(False)
-
-
+gravity = 10
 def setup():
-    size(600, 700)
+    size(300, 600)
     
 def draw():
-    background(255)
-    global speed 
-    global walk_speed
-    global accelerate
+    global score
     global gravity
     global velocity
-    global moveX
-    global moveY
-    global gravY
-
-    player = Player(300, 300)
-    player.pos.x += moveX
-    player.pos.y += moveY
-    player.pos.y += gravY
-    player.update()
+    background(0)
+    
+    ball1 = Ball(0, 0)
+    velocity += gravity
+    ball1.pos.y += velocity
+    
+    if ball1.pos.y - 40 >= height:
+        velocity = 0
+        ball1.pos.y = 0
+        gravity += velocity
+        ball1.pos.y += velocity
+        ball1.pos.x = random(0, width)
+        score += 1
+    
+    
+    print(ball1.pos.y)
+    ball1.display()
+    player = Player()
     player.display()
-    platform1 = Platform(400, 600)
-    platform2 = Platform(300, 500)
-    platform3 = Platform(200, 400)
-    platform1.display_p()
-    platform2.display_p()
-    platform3.display_p()
-    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform1.pos.x, platform1.pos.y, platform1.w)
-    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform2.pos.x, platform2.pos.y, platform2.w)
-    player.collisionDetect(player.pos.x, player.pos.y, player.w, platform3.pos.x, platform3.pos.y, platform3.w)
-
-
-    
-    if key_state[37] or key_state[65]:
-        walk_speed += accelerate
-        moveX -= walk_speed             
-    
-    elif key_state[39] or key_state[68]:
-        walk_speed += accelerate
-        moveX += walk_speed
-    
-    if key_state[38] or key_state[87]:
-        moveY -= jump_height
-    
-    if key_state[40] or key_state[83]:
-        moveY += jump_height
+    player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize)
         
-    if walk_speed >=10:
-        walk_speed = 10       
-        
-        
+    #Scoreboard
+    fill(0, 255, 0)
+    textSize(30)
+    text(score, 50, 50)
     
-        
+    # #updating pos of falling ball
+    # if falling_ball_pos.y >= height:
+    #     falling_ball_pos.y = 0
+    #     falling_ball_pos.x = random(0, 300)
+    #     gravity += acceleration
+    #     score += 1
     
-        
-        
+    # r = 40/2
+    # a = falling_ball_pos.x - mouseX
+    # b = falling_ball_pos.y - 580
+    # c = sqrt(a**2 + b**2)
+    
+    # if c <= r*2:
+    #     score = 0
+    #     falling_ball_pos.y = 0
+    #     gravity = 10
