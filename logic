@@ -66,16 +66,17 @@ def draw():
         fill(0)
         text("PLAY", 115, 160)
         
+        if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
+            if mousePressed == True:
+                screen = 1
+    
         fill(255)
         rect(75, 225, 150, 100)
         textSize(32)
         fill(0)
         text("HELP", 115, 280)
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
-            if mousePressed == True:
-                screen = 3
-    
-        if mouseX >= 75 and mouseX <=225 and mouseY >= 225 and mouseY <= 325:
+        
+        if mouseX >= 75 and mouseX <= 225 and mouseY >= 225 and mouseY <= 325:
             if mousePressed == True:
                 screen = 2
     
@@ -83,8 +84,15 @@ def draw():
             background(255)
             fill(255)
             rect(75, 400, 150, 100,)
-        
-            fill(0,)
+            fill(0)
+            textSize(32)
+            text("Return", 100, 460)
+            
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
+                if mousePressed == True:
+                    screen = 0
+                
+            fill(0)
             textSize(14)
             text("""You have coded yourself into a computer.
 Use the mouse to dodge the binary code, 
@@ -94,7 +102,7 @@ can escape.""", 0, 100)
 
     
 
-    if screen == 3:
+    elif screen == 1:
         
         ball1 = Ball(0, 0)
         ball2 = Ball(300, -200)
