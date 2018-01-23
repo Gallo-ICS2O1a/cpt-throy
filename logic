@@ -35,7 +35,7 @@ class Player():
         ellipse(self.pos.x, self.pos.y, 40, 40)
 
 
-score = 100
+score = 0
 velocity = 0
 velocity2 = 0
 gravity = .5
@@ -63,6 +63,11 @@ def draw():
         cursor()
         background(255)
 
+        fill(0, 255, 0)
+        textSize(32)
+        text("""PYTHON MAN
+(or woman)""", 40, 45)
+        
         fill(255)
         rect(75, 100, 150, 100)
         textSize(32)
@@ -79,8 +84,8 @@ def draw():
         fill(0)
         text("HELP", 115, 280)
 
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 225 and mouseY <= 325:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 225 and mouseY <= 325:
                 screen = 2
 
     elif screen == 2:
@@ -91,8 +96,8 @@ def draw():
             textSize(32)
             text("Return", 100, 460)
 
-            if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
-                if mousePressed == True:
+            if mousePressed == True:
+                if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
                     screen = 0
 
             fill(0)
@@ -183,8 +188,8 @@ can escape.""", 0, 100)
         textSize(28)
         text("Play Again", 80, 360)
 
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 300 and mouseY <= 400:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 300 and mouseY <= 400:
                 lives = 3
                 screen = 1
 
@@ -193,11 +198,11 @@ can escape.""", 0, 100)
         fill(0)
         text("Menu", 110, 515)
 
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 450 and mouseY <= 550:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 450 and mouseY <= 550:
                 screen = 0
                 lives = 3
-    
+
     elif screen == 4:
             background(255)
             fill(255)
@@ -206,8 +211,8 @@ can escape.""", 0, 100)
             textSize(32)
             text("PLAY", 100, 460)
 
-            if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
-                if mousePressed == True:
+            if mousePressed == True:
+                if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
                     screen = 1
 
             fill(0)
@@ -217,23 +222,23 @@ Use the mouse to dodge the binary code,
 or be forever stuck in the computer.
 If you reach the score of 100 you
 can escape.""", 0, 100)
-            
+
     elif screen == 5:
         cursor()
         background(255)
-        
+
         fill(0, 255, 0)
         textSize(35)
         text("YOU ESCAPE!", 40, 45)
-        
+
         fill(255)
         rect(75, 100, 150, 100)
         textSize(22)
         fill(0)
         text("PLAY AGAIN", 80, 160)
 
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
                 screen = 1
 
         fill(255)
@@ -242,11 +247,6 @@ can escape.""", 0, 100)
         fill(0)
         text("MENU", 100, 360)
 
-        if mouseX >= 75 and mouseX <= 225 and mouseY >= 300 and mouseY <= 400:
-            if mousePressed == True:
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 22 and mouseY >= 300 and mouseY <= 400:
                 screen = 0
-
-    
-        
-        
-    
