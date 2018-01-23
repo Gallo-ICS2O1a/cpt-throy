@@ -163,10 +163,12 @@ can escape.""", 0, 100)
 
         fill(0, 255, 0)
         textSize(14)
+        text("Score:", 20, 20)
         text(score, 50, 50)
 
         fill(0, 255, 0)
         textSize(14)
+        text("Lives:", 240, 20 )
         text(lives, 250, 50)        
 
         if lives == 0:
@@ -243,3 +245,8 @@ can escape.""", 0, 100)
         if mouseX >= 75 and mouseX <= 225 and mouseY >= 300 and mouseY <= 400:
             if mousePressed == True:
                 screen = 0
+
+    
+        
+        
+    
