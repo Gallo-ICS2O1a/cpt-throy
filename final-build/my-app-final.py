@@ -1,2 +1,252 @@
-# Rename this file to include the name of your application
-# Replace this code with your application code.
+class Ball():
+    def __init__(self, x, y):
+        global velocity
+        global gravity
+        self.pos = PVector(x, y)
+        self.bsize = 40
+        self.c = color(255, 0, 0)   
+
+    def display(self):
+        fill(self.c)
+        ellipse(self.pos.x, self.pos.y, self.bsize, self.bsize)
+
+
+class Player():
+    def __init__(self):
+        self.pos = PVector(mouseX, 580)
+        self.bsize = 40
+        self.c = color(0, 255, 0)
+
+    def collisionDetect(self, x1, y1, w1, x2, y2, w2):
+
+        self.r = w1/2
+        self.a = x1 - x2
+        self.b = y1 - y2
+        self.c = sqrt(self.a**2 + self.b**2)
+
+        if self.c <= self.r*2:
+            return(True)
+
+        else:
+            return(False)
+
+    def display(self):
+        fill(self.c)
+        ellipse(self.pos.x, self.pos.y, 40, 40)
+
+
+score = 0
+velocity = 0
+velocity2 = 0
+gravity = .5
+screen = 0
+lives = 3
+
+ball1 = Ball(0, 0)
+ball2 = Ball(300, -200)
+
+
+def setup():
+    size(300, 600)
+
+
+def draw():
+    global score
+    global gravity
+    global velocity
+    global velocity2
+    global screen
+    global lives
+    background(0)
+
+    if screen == 0:
+        cursor()
+        background(255)
+
+        fill(0, 255, 0)
+        textSize(32)
+        text("""PYTHON MAN
+(or woman)""", 40, 45)
+        
+        fill(255)
+        rect(75, 100, 150, 100)
+        textSize(32)
+        fill(0)
+        text("PLAY", 115, 160)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
+                screen = 4
+
+        fill(255)
+        rect(75, 225, 150, 100)
+        textSize(32)
+        fill(0)
+        text("HELP", 115, 280)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 225 and mouseY <= 325:
+                screen = 2
+
+    elif screen == 2:
+            background(255)
+            fill(255)
+            rect(75, 400, 150, 100,)
+            fill(0)
+            textSize(32)
+            text("Return", 100, 460)
+
+            if mousePressed == True:
+                if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
+                    screen = 0
+
+            fill(0)
+            textSize(14)
+            text("""You have coded yourself into a computer.
+Use the mouse to dodge the binary code, 
+or be forever stuck in the computer.
+If you reach the score of 100 you
+can escape.""", 0, 100)
+
+    elif screen == 1:
+        noCursor()
+        global ball1
+        global ball2
+
+        velocity += gravity
+        velocity2 += gravity
+
+        ball1.pos.y += velocity
+
+        if ball1.pos.y - 40 >= height:
+            velocity = 0
+            ball1.pos.y = random(-100, 0)
+            gravity += velocity
+            ball1.pos.y += velocity
+            ball1.pos.x = random(0, width)
+            score += 1
+
+        ball2.pos.y += velocity2
+
+        if ball2.pos.y - 40 >= height:
+            velocity2 = 0
+            ball2.pos.y = random(-100, 0)
+            gravity += velocity2
+            ball2.pos.y += velocity2
+            ball2.pos.x = random(0, width)
+            score += 1
+
+        ball1.display()
+        ball2.display()
+
+        player = Player()
+        player.display()
+        player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize)
+        player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball2.pos.x, ball2.pos.y, ball2.bsize)
+
+        if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball1.pos.x, ball1.pos.y, ball1.bsize) == True:
+            score = 0
+            velocity = 0
+            ball1.pos.y = random(-100, 0)
+            gravity += velocity
+            ball1.pos.y += velocity
+            ball1.pos.x = random(0, width)
+            lives -= 1
+
+        if player.collisionDetect(player.pos.x, player.pos.y, player.bsize, ball2.pos.x, ball2.pos.y, ball2.bsize) == True:
+            score = 0
+            velocity2 = 0
+            ball2.pos.y = random(-100, 0)
+            gravity += velocity2
+            ball2.pos.y += velocity2
+            ball2.pos.x = random(0, width)
+            lives -= 1
+
+        if score == 100:
+            screen = 5
+            score = 0
+
+        fill(0, 255, 0)
+        textSize(14)
+        text("Score:", 20, 20)
+        text(score, 50, 50)
+
+        fill(0, 255, 0)
+        textSize(14)
+        text("Lives:", 240, 20 )
+        text(lives, 250, 50)        
+
+        if lives == 0:
+            screen = 3
+
+    elif screen == 3:
+        cursor()
+        background(255)
+        fill(255)
+        rect(75, 300, 150, 100)
+        fill(0)
+        textSize(28)
+        text("Play Again", 80, 360)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 300 and mouseY <= 400:
+                lives = 3
+                screen = 1
+
+        fill(255)
+        rect(75, 450, 150, 100)
+        fill(0)
+        text("Menu", 110, 515)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 450 and mouseY <= 550:
+                screen = 0
+                lives = 3
+
+    elif screen == 4:
+            background(255)
+            fill(255)
+            rect(75, 400, 150, 100,)
+            fill(0)
+            textSize(32)
+            text("PLAY", 100, 460)
+
+            if mousePressed == True:
+                if mouseX >= 75 and mouseX <= 225 and mouseY >= 400 and mouseY <= 500:
+                    screen = 1
+
+            fill(0)
+            textSize(14)
+            text("""You have coded yourself into a computer.
+Use the mouse to dodge the binary code, 
+or be forever stuck in the computer.
+If you reach the score of 100 you
+can escape.""", 0, 100)
+
+    elif screen == 5:
+        cursor()
+        background(255)
+
+        fill(0, 255, 0)
+        textSize(35)
+        text("YOU ESCAPE!", 40, 45)
+
+        fill(255)
+        rect(75, 100, 150, 100)
+        textSize(22)
+        fill(0)
+        text("PLAY AGAIN", 80, 160)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 225 and mouseY >= 100 and mouseY <= 200:
+                screen = 1
+
+        fill(255)
+        rect(75, 300, 150, 100)
+        textSize(32)
+        fill(0)
+        text("MENU", 100, 360)
+
+        if mousePressed == True:
+            if mouseX >= 75 and mouseX <= 22 and mouseY >= 300 and mouseY <= 400:
+                screen = 0
